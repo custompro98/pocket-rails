@@ -11,6 +11,10 @@ test:
   <<: *default
   database: pocket_test
 
+staging:
+  <<: *default
+  database: pocket_staging
+
 production:
   <<: *default
   database: pocket_production
