@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+- 2.4.1
+before_script:
+- rake db:setup
+- rake db:migrate
+deploy:
+  provider: heroku
+  api_key:
+    secure: JKLS4jAP39x1PvVVYwtKoNwHcraqPyv84rT38FRlDuAqEqToo3tYI2Dcpv6u8EgnUX8mUn4I2RkwlS5RJ7jnWWzBR9QRpzUkIXMkx4Le8O6oADrxaM9AoFfgZuxqBHGVY+AQCqO5CfAQZchNMABmTyhUUnpfxzpAzE/Y7Qqiq+fotjtX99FDSF96BtAq+OP44o4g2rPztayJP207lVZsxU/jLqbYtJPcIdkCSRT/6heET5N2sxToCOTn9S6Md1EokaPajZiY6ePKcH+R78aQ94eHc2ea9KMdohVs1OdA8M6dncs/PcvRL3GbgD+pbJJ7eDf5O2j6UXRIrezL5iaGOSvjIG3k/QaNU6wltsrGRD+TWIb5U4+4f+bBSF+r6jupG1vh9UKVrvBg9mPyOa8tI3V5rps0xu1QUaH3wJgzp2BPB/nBmqxNtPDqRsfLQcDsz8blgXHR4SKxLd79rTJ2zKy8KRl4riP+mofYoN+PNFW6XbxyhaZUL/wYJ9Lg2SBQVHMprMd0l3Ge9NBI53M60wpZIwGz0DVf4D8rwWBIqZ46E9nBqZm6yIdsKYuo7FSSeHUQo/eeJt9wV3KGPPILd40y5pdNtV8goAdWi10JEDbwii2j4ERB8v8I7kLodovfRhJwKoo1GhuyBSWp8q9JkEjntmvt7RLV0JuarIUcDWg=
+  app: secret-lake-48253
+  on:
+    repo: custompro98/pocket-rails
