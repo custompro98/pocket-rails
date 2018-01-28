@@ -5,7 +5,7 @@ describe 'GET /bookmarks', type: :request do
   let(:status) { :ok }
 
   context 'there are no bookmarks' do
-    before { get api_v1_bookmarks_path}
+    before { get api_v1_bookmarks_path, headers: headers }
 
     it_behaves_like 'a successful request'
 
@@ -17,7 +17,7 @@ describe 'GET /bookmarks', type: :request do
   context 'there are fewer than the page limit bookmarks' do
     let!(:bookmarks) { create_list(:bookmark, 10, user_id: owner.id) }
 
-    before { get api_v1_bookmarks_path}
+    before { get api_v1_bookmarks_path, headers: headers }
 
     it_behaves_like 'a successful request'
 
@@ -31,7 +31,7 @@ describe 'GET /bookmarks', type: :request do
     let!(:bookmarks) { create_list(:bookmark, 19, user_id: owner.id) }
     let(:params) { {} }
 
-    before { get api_v1_bookmarks_path, params: params }
+    before { get api_v1_bookmarks_path, params: params, headers: headers }
 
     context 'page 1' do
       it 'returns the first 10 bookmarks' do

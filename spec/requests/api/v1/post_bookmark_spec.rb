@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'POST /bookmarks', type: :request do
-  before { post api_v1_bookmarks_path, params: attributes }
+  before { post api_v1_bookmarks_path, params: attributes, headers: headers }
 
   context 'when a valid bookmark is submitted' do
     let(:attributes) { {title: 'Test Title', url: 'www.example.com'} }

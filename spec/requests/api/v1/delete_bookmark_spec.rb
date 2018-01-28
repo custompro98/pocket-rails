@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'DELETE /bookmarks/:id', type: :request do
-  before { delete api_v1_bookmark_path(bookmark.id) }
+  before { delete api_v1_bookmark_path(bookmark.id), headers: headers }
 
   context 'the bookmark to delete exists' do
     let(:bookmark) { create(:bookmark) }
