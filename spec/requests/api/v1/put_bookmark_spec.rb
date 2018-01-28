@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'PUT /bookmarks/:id', type: :request do
-  before { put api_v1_bookmark_path(bookmark.id), params: attributes }
+  before { put api_v1_bookmark_path(bookmark.id), params: attributes, headers: headers }
 
   context 'the bookmark to update already exists' do
     let(:bookmark) { create(:bookmark) }

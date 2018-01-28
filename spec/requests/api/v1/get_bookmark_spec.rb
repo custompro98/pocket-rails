@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'GET /bookmarks/:id', type: :request do
-  before { get api_v1_bookmark_path(bookmark.id) }
+  before { get api_v1_bookmark_path(bookmark.id), headers: headers }
 
   context 'when the bookmark exists' do
     let!(:bookmark) { create(:bookmark) }

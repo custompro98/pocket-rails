@@ -1,6 +1,6 @@
 module Api
   module V1
-    class BookmarksController < ApplicationController
+    class BookmarksController < ::Api::V1::ApplicationController
       def index
         json_response(::Bookmark.limit(limit).offset(offset))
       end
@@ -53,11 +53,6 @@ module Api
         {'title' => nil, 'url' => nil, 'favorite' => nil, 'archived' => nil}
           .merge(params.permit(:title, :url, :favorite, :archived))
           .merge(user_id: current_user.id)
-      end
-
-      def current_user
-        # TODO: once auth is implemented, make this actual current user
-        ::User.first_or_create(first_name: 'Default', last_name: 'User', email: 'test@example.com', password: 'password')
       end
     end
   end
