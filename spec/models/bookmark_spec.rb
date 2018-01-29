@@ -9,5 +9,7 @@ describe ::Bookmark, type: :model do
 
   describe 'assocations' do
     it { should belong_to(:user) }
+    it { should have_many(:tag_joins) }
+    it { should have_many(:tags) }
   end
 end
