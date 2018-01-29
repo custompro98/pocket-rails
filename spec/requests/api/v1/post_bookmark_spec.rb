@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe 'POST /bookmarks', type: :request do
-  before { post api_v1_bookmarks_path, params: attributes, headers: headers }
+  let(:owner) { create(:user) }
+
+  before { post api_v1_bookmarks_path, params: attributes, headers: headers(owner) }
 
   context 'when a valid bookmark is submitted' do
     let(:attributes) { {title: 'Test Title', url: 'www.example.com'} }
@@ -11,6 +13,10 @@ describe 'POST /bookmarks', type: :request do
 
     it 'includes a location header to redirect to the new bookmark' do
       expect(response.headers['Location']).not_to be_nil
+    end
+
+    it 'creates a bookmark owned by current user' do
+      expect(::Bookmark.first.user_id).to eq(owner.id)
     end
   end
 

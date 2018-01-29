@@ -2,11 +2,11 @@ module Api
   module V1
     class BookmarksController < ::Api::V1::ApplicationController
       def index
-        json_response(::Bookmark.limit(limit).offset(offset))
+        json_response(::Bookmark.where(user_id: current_user.id).limit(limit).offset(offset))
       end
 
       def show
-        json_response(::Bookmark.find(params[:id]))
+        json_response(::Bookmark.find_by!(id: params[:id], user_id: current_user.id))
       end
 
       def create
@@ -17,6 +17,8 @@ module Api
 
       def update
         bookmark = ::Bookmark.find_by(id: params[:id])
+
+        raise ::ExceptionHandler::ResourceForbidden unless bookmark.nil? || bookmark.user_id == current_user.id
 
         if bookmark.present?
           bookmark.update!(update_bookmark_params)
@@ -31,7 +33,7 @@ module Api
       end
 
       def destroy
-        ::Bookmark.find(params[:id]).destroy
+        ::Bookmark.find_by!(id: params[:id], user_id: current_user.id).destroy
         json_response(status: :no_content)
       end
 

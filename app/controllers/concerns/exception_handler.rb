@@ -1,6 +1,8 @@
 module ExceptionHandler
   extend ActiveSupport::Concern
 
+  class ResourceForbidden < StandardError; end
+
   included do
     rescue_from ActiveRecord::RecordNotFound do
       json_response({message: "#{object_type} not found"}, status: :not_found)
@@ -10,8 +12,12 @@ module ExceptionHandler
       json_response(
         {message: "#{object_type} cannot be #{params[:action]}d",
          errors: parse_errors(e)},
-        status: :unprocessable_entity
+         status: :unprocessable_entity
       )
+    end
+
+    rescue_from ResourceForbidden do
+      json_response({message: "#{object_type} is owned by a different user"}, status: :forbidden)
     end
 
     def parse_errors(e)
