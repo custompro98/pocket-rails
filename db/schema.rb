@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180127154028) do
+ActiveRecord::Schema.define(version: 20180129013038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,25 @@ ActiveRecord::Schema.define(version: 20180127154028) do
     t.boolean "archived", default: false, null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "tag_joins", force: :cascade do |t|
+    t.integer "tag_id", null: false
+    t.integer "taggable_id", null: false
+    t.string "taggable_type", null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["taggable_id", "taggable_type"], name: "index_tag_joins_on_taggable_id_and_taggable_type"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "user_id", null: false
+    t.boolean "favorite", default: false, null: false
+    t.boolean "archived", default: false, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["name", "user_id"], name: "index_tags_on_name_and_user_id", unique: true, where: "(archived = false)"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,4 +73,5 @@ ActiveRecord::Schema.define(version: 20180127154028) do
   end
 
   add_foreign_key "bookmarks", "users", on_delete: :cascade
+  add_foreign_key "tags", "users", on_delete: :cascade
 end
