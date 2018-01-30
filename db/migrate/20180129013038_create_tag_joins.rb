@@ -9,6 +9,7 @@ class CreateTagJoins < ActiveRecord::Migration[5.1]
     end
 
     add_index :tag_joins, [:taggable_id, :taggable_type]
+    add_index :tag_joins, [:tag_id, :taggable_id, :taggable_type], unique: true
   end
 
   def down

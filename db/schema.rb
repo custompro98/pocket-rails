@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20180129013038) do
     t.string "taggable_type", null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["tag_id", "taggable_id", "taggable_type"], name: "index_tag_joins_on_tag_id_and_taggable_id_and_taggable_type", unique: true
     t.index ["taggable_id", "taggable_type"], name: "index_tag_joins_on_taggable_id_and_taggable_type"
   end
 
