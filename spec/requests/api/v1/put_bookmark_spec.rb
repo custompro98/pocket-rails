@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'PUT /bookmarks/:id', type: :request do
   let(:owner) { create(:user) }
 
-  before { put api_v1_bookmark_path(bookmark.id), params: attributes, headers: headers(owner) }
+  before { put api_v1_bookmark_path(bookmark), params: attributes, headers: headers(owner) }
 
   context 'the bookmark to update already exists and is owned by current user' do
     let(:bookmark) { create(:bookmark, user_id: owner.id) }
