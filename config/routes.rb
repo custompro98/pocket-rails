@@ -3,8 +3,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :bookmarks
-      resources :tags, only: [:index]
+      resources :bookmarks do
+        resources :tags, only: [:index, :create, :destroy]
+      end
+      resources :tags, only: [:index, :create, :destroy]
     end
   end
 end

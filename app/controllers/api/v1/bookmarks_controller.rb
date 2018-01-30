@@ -39,14 +39,6 @@ module Api
 
       private
 
-      def limit
-        10
-      end
-
-      def offset
-        params[:page].present? ? ((params[:page].to_i - 1) * limit) : 0
-      end
-
       def create_bookmark_params
         params.permit(:title, :url).merge(user_id: current_user.id)
       end
