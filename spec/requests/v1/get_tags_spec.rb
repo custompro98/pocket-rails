@@ -5,7 +5,7 @@ describe 'GET /tags', type: :request do
   let(:status) { :ok }
 
   context 'there are no tags that belong to current user' do
-    before { get api_v1_tags_path, headers: headers(owner) }
+    before { get v1_tags_path, headers: headers(owner) }
 
     it_behaves_like 'a successful request'
 
@@ -18,7 +18,7 @@ describe 'GET /tags', type: :request do
     let!(:tags) { create_list(:tag, 9, user_id: owner.id) }
     let!(:not_my_tag) { create(:tag) }
 
-    before { get api_v1_tags_path, headers: headers(owner) }
+    before { get v1_tags_path, headers: headers(owner) }
 
     it_behaves_like 'a successful request'
 
@@ -32,7 +32,7 @@ describe 'GET /tags', type: :request do
     let!(:tags) { create_list(:tag, 19, user_id: owner.id) }
     let(:params) { {} }
 
-    before { get api_v1_tags_path, params: params, headers: headers(owner) }
+    before { get v1_tags_path, params: params, headers: headers(owner) }
 
     context 'page 1' do
       it 'returns the first 10 tags' do

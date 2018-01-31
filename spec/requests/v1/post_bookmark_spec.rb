@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'POST /bookmarks', type: :request do
   let(:owner) { create(:user) }
 
-  before { post api_v1_bookmarks_path, params: attributes, headers: headers(owner) }
+  before { post v1_bookmarks_path, params: attributes, headers: headers(owner) }
 
   context 'when a valid bookmark is submitted' do
     let(:attributes) { {title: 'Test Title', url: 'www.example.com'} }

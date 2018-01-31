@@ -6,7 +6,7 @@ describe 'GET /bookmarks/:bookmark_id/tags', type: :request do
   let(:status) { :ok }
 
   context 'there are no tags attached to the bookmark' do
-    before { get api_v1_bookmark_tags_path(bookmark), headers: headers(owner) }
+    before { get v1_bookmark_tags_path(bookmark), headers: headers(owner) }
 
     it_behaves_like 'a successful request'
 
@@ -18,7 +18,7 @@ describe 'GET /bookmarks/:bookmark_id/tags', type: :request do
   context 'there are fewer than the page limit tags attached to the bookmark' do
     let!(:tags) { create_list(:tag, 9, user_id: owner.id, taggable: bookmark) }
 
-    before { get api_v1_bookmark_tags_path(bookmark), headers: headers(owner) }
+    before { get v1_bookmark_tags_path(bookmark), headers: headers(owner) }
 
     it_behaves_like 'a successful request'
 
@@ -32,7 +32,7 @@ describe 'GET /bookmarks/:bookmark_id/tags', type: :request do
     let!(:tags) { create_list(:tag, 19, user_id: owner.id, taggable: bookmark) }
     let(:params) { {} }
 
-    before { get api_v1_bookmark_tags_path(bookmark), params: params, headers: headers(owner) }
+    before { get v1_bookmark_tags_path(bookmark), params: params, headers: headers(owner) }
 
     context 'page 1' do
       it 'returns the first 10 tags' do

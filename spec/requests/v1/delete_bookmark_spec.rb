@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'DELETE /bookmarks/:id', type: :request do
   let(:owner) { create(:user) }
 
-  before { delete api_v1_bookmark_path(bookmark), headers: headers(owner) }
+  before { delete v1_bookmark_path(bookmark), headers: headers(owner) }
 
   context 'the bookmark to delete exists and is owned by current user' do
     let(:bookmark) { create(:bookmark, user_id: owner.id) }

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'GET /bookmarks/:id', type: :request do
   let(:owner) { create(:user) }
 
-  before { get api_v1_bookmark_path(bookmark), headers: headers(owner) }
+  before { get v1_bookmark_path(bookmark), headers: headers(owner) }
 
   context 'when the bookmark exists and is owned by current user' do
     let!(:bookmark) { create(:bookmark, user_id: owner.id) }
