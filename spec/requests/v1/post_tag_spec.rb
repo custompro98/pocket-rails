@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'POST /tags', type: :request do
   let(:owner) { create(:user) }
 
-  before { post api_v1_tags_path, params: attributes, headers: headers(owner) }
+  before { post v1_tags_path, params: attributes, headers: headers(owner) }
 
   context 'when a valid tag is submitted' do
     let(:attributes) { {name: 'Test Tag'} }
@@ -13,7 +13,7 @@ describe 'POST /tags', type: :request do
 
     it 'includes a location header to redirect back to the tag index' do
       expect(response.headers['Location']).not_to be_nil
-      expect(response.headers['Location']).to eq api_v1_tags_path
+      expect(response.headers['Location']).to eq v1_tags_path
     end
 
     it 'creates a tag owned by current user' do

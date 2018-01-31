@@ -25,7 +25,7 @@ module ExceptionHandler
     end
 
     def object_type
-      self.class.name.match(/\S*::\S*::(\S*)Controller/)[1].singularize
+      self.class.name.match(/\S*::(\S*)Controller/)[1].singularize
     end
   end
 end

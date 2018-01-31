@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'DELETE /tags/:id', type: :request do
   let(:owner) { create(:user) }
 
-  before { delete api_v1_tag_path(tag), headers: headers(owner) }
+  before { delete v1_tag_path(tag), headers: headers(owner) }
 
   context 'the tag to delete exists and is owned by current user' do
     let(:tag) { create(:tag, user_id: owner.id) }

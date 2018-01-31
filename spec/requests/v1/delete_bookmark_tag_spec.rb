@@ -4,7 +4,7 @@ describe 'DELETE /bookmarks/:bookmark_id/tags/:id', type: :request do
   let(:owner) { create(:user) }
   let(:bookmark) { create(:bookmark, user_id: owner.id) }
 
-  before { delete api_v1_bookmark_tag_path(bookmark, tag), headers: headers(owner) }
+  before { delete v1_bookmark_tag_path(bookmark, tag), headers: headers(owner) }
 
   context 'the tag to delete exists' do
     let(:tag) { create(:tag, user_id: owner.id, taggable: bookmark) }

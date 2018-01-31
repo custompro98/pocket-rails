@@ -5,7 +5,7 @@ describe 'POST /bookmarks/:bookmark_id/tags', type: :request do
   let(:bookmark) { create(:bookmark, user_id: owner.id) }
   let(:status) { :created }
 
-  before { post api_v1_bookmark_tags_path(bookmark), params: {tag_ids: tag_ids}, headers: headers(owner) }
+  before { post v1_bookmark_tags_path(bookmark), params: {tag_ids: tag_ids}, headers: headers(owner) }
 
   context 'when the bookmark doesn\'t exist and tag doesn\'t exist' do
     let(:bookmark) { OpenStruct.new(id: 1) }
@@ -36,7 +36,7 @@ describe 'POST /bookmarks/:bookmark_id/tags', type: :request do
 
     it 'includes a location header to redirect to the bookmark' do
       expect(response.headers['Location']).not_to be_nil
-      expect(response.headers['Location']).to eq api_v1_bookmark_path(bookmark)
+      expect(response.headers['Location']).to eq v1_bookmark_path(bookmark)
     end
   end
 
