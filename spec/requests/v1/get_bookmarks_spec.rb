@@ -50,4 +50,18 @@ describe 'GET /bookmarks', type: :request do
       end
     end
   end
+
+  context 'a filter is applied for a tag the user owns' do
+    let(:bookmarks) { create_list(:bookmark, 2, user_id: owner.id) }
+    let(:tag) { create(:tag, user_id: owner.id, taggable: bookmarks.first) }
+    let(:params) { {tag: tag.id} }
+
+    before { get v1_bookmarks_path, params: params, headers: headers(owner) }
+
+    it 'returns only the bookmarks with that tag' do
+      expect(json).not_to be_empty
+      expect(json.size).to eq 1
+      expect(json.first[:title]).to eq bookmarks.first.title
+    end
+  end
 end
