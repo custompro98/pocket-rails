@@ -3,6 +3,10 @@ class Bookmark < ApplicationRecord
 
   belongs_to :user
 
-  has_many :tag_joins, as: :taggable
+  has_many :tag_joins, as: :taggable, dependent: :destroy
   has_many :tags, through: :tag_joins
+
+  def self.with_tag(tag)
+    joins(:tags).where(tags: {id: tag})
+  end
 end

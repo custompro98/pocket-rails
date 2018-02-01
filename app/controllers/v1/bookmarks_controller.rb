@@ -1,7 +1,9 @@
 module V1
   class BookmarksController < ::V1::ApplicationController
     def index
-      json_response(::Bookmark.where(user_id: current_user.id).limit(limit).offset(offset))
+      bookmarks = ::Bookmark.where(user_id: current_user.id)
+      bookmarks = bookmarks.with_tag(params[:tag]) if params[:tag]
+      json_response(bookmarks.limit(limit).offset(offset))
     end
 
     def show
