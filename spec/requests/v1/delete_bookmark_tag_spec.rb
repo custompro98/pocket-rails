@@ -28,4 +28,11 @@ describe 'DELETE /bookmarks/:bookmark_id/tags/:id', type: :request do
       expect(::Tag.find(tag.id).id).to eq tag.id
     end
   end
+
+  context 'the tag to delete is not owned by the current user' do
+    let(:tag) { create(:tag, taggable: bookmark) }
+    let(:status) { :forbidden }
+
+    it_behaves_like 'an unsuccessful request'
+  end
 end

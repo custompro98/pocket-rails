@@ -60,4 +60,11 @@ describe 'POST /bookmarks/:bookmark_id/tags', type: :request do
       expect(json[:errors]).to include taggable_error
     end
   end
+
+  context 'when the tag being added is not owned by the current user' do
+    let(:tag_ids) { [create(:tag, taggable: bookmark).id] }
+    let(:status) { :forbidden }
+
+    it_behaves_like 'an unsuccessful request'
+  end
 end
