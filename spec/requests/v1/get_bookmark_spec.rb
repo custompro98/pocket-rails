@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe 'Bookmarks', type: :request do
-  include ::Docs::Bookmarks::Api
+  include ::Docs::V1::Bookmarks::Api
 
   describe 'GET /bookmarks/:id' do
-    include ::Docs::Bookmarks::Show
+    include ::Docs::V1::Bookmarks::Show
 
     let(:owner) { create(:user) }
 
@@ -16,7 +16,7 @@ describe 'Bookmarks', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns the bookmark', dox: true do
+      it 'returns the bookmark', :dox do
         expect(json).not_to be_empty
         expect(json[:id]).to eq bookmark.id
       end
@@ -28,7 +28,7 @@ describe 'Bookmarks', type: :request do
 
       it_behaves_like 'an unsuccessful request'
 
-      it 'returns a not found message', dox: true do
+      it 'returns a not found message', :dox do
         expect(json[:message]).to eq 'Bookmark not found'
       end
     end
@@ -39,7 +39,7 @@ describe 'Bookmarks', type: :request do
 
       it_behaves_like 'an unsuccessful request'
 
-      it 'returns a not found message', dox: true do
+      it 'returns a not found message', :dox do
         expect(json[:message]).to eq 'Bookmark not found'
       end
     end

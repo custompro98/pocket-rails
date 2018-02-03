@@ -11,5 +11,5 @@ deploy:
   app: secret-lake-48253
   on:
     repo: custompro98/pocket-rails
-after_script:
+after_success:
   - rake api:docs:publish

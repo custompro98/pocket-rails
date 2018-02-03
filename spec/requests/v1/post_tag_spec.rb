@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'POST /tags', type: :request do
   let(:owner) { create(:user) }
 
-  before { post v1_tags_path, params: attributes, headers: headers(owner) }
+  before { post v1_tags_path, params: attributes.to_json, headers: headers(owner) }
 
   context 'when a valid tag is submitted' do
     let(:attributes) { {name: 'Test Tag'} }
