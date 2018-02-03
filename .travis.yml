@@ -1,9 +1,9 @@
 language: ruby
 rvm:
-- 2.4.1
+  - 2.4.1
 before_script:
-- rake db:setup
-- rake db:migrate
+  - rake db:setup
+  - rake db:migrate
 deploy:
   provider: heroku
   api_key:
@@ -11,3 +11,5 @@ deploy:
   app: secret-lake-48253
   on:
     repo: custompro98/pocket-rails
+after_script:
+  - rake api:docs:publish
