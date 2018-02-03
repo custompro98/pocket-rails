@@ -3,15 +3,17 @@ require Rails.root.join('spec/shared_examples/response_codes.rb')
 Dir[Rails.root.join('spec/descriptors/**/*.rb')].each { |f| require f }
 
 Dox.configure do |config|
-  config.headers_whitelist = ['Location']
+  config.headers_whitelist = ['Location', 'access-token', 'client', 'expiry', 'uid']
 end
 
 module RequestSpecHelper
   def headers(user = nil)
-    (user || create(:user)).create_new_auth_token.merge({
-      'ACCEPT' => 'application/json',
-      'CONTENT-TYPE' => 'application/json'
-    })
+    default_headers.merge((user || create(:user)).create_new_auth_token)
+  end
+
+  def default_headers
+    {'ACCEPT' => 'application/json',
+     'CONTENT-TYPE' => 'application/json'}
   end
 
   def json
