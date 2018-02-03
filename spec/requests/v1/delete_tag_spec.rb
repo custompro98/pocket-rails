@@ -1,32 +1,42 @@
 require 'rails_helper'
 
-describe 'DELETE /tags/:id', type: :request do
-  let(:owner) { create(:user) }
+describe 'Tags', type: :request do
+  include ::Docs::V1::Tags::Api
 
-  before { delete v1_tag_path(tag), headers: headers(owner) }
+  describe 'DELETE /tags/:id', type: :request do
+    include ::Docs::V1::Tags::Destroy
 
-  context 'the tag to delete exists and is owned by current user' do
-    let(:tag) { create(:tag, user_id: owner.id) }
-    let(:status) { :no_content }
+    let(:owner) { create(:user) }
 
-    it_behaves_like 'a successful request'
+    before { delete v1_tag_path(tag), headers: headers(owner) }
 
-    it 'deletes the tag' do
-      expect{ ::Tag.find(tag.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    context 'the tag to delete exists and is owned by current user' do
+      let(:tag) { create(:tag, user_id: owner.id) }
+      let(:status) { :no_content }
+
+      it_behaves_like 'a successful request'
+
+      it 'deletes the tag', :dox do
+        expect{ ::Tag.find(tag.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
-  end
 
-  context 'the tag to delete exists and is not owned by current user' do
-    let(:tag) { create(:tag) }
-    let(:status) { :not_found }
+    context 'the tag to delete exists and is not owned by current user' do
+      let(:tag) { create(:tag) }
+      let(:status) { :not_found }
 
-    it_behaves_like 'an unsuccessful request'
-  end
+      it_behaves_like 'an unsuccessful request'
+    end
 
-  context 'the tag to delete does not exist' do
-    let(:tag) { OpenStruct.new(id: 1) }
-    let(:status) { :not_found }
+    context 'the tag to delete does not exist' do
+      let(:tag) { OpenStruct.new(id: 1) }
+      let(:status) { :not_found }
 
-    it_behaves_like 'an unsuccessful request'
+      it_behaves_like 'an unsuccessful request'
+
+      it 'returns an error message', :dox do
+        expect(json[:message]).to eq 'Tag not found'
+      end
+    end
   end
 end
