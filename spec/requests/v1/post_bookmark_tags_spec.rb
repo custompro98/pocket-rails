@@ -5,7 +5,7 @@ describe 'POST /bookmarks/:bookmark_id/tags', type: :request do
   let(:bookmark) { create(:bookmark, user_id: owner.id) }
   let(:status) { :created }
 
-  before { post v1_bookmark_tags_path(bookmark), params: {tag_ids: tag_ids}, headers: headers(owner) }
+  before { post v1_bookmark_tags_path(bookmark), params: {tag_ids: tag_ids}.to_json, headers: headers(owner) }
 
   context 'when the bookmark doesn\'t exist and tag doesn\'t exist' do
     let(:bookmark) { OpenStruct.new(id: 1) }
