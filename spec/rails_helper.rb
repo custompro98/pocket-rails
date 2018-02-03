@@ -32,6 +32,10 @@ RSpec.configure do |config|
   end
 
   config.include RequestSpecHelper, type: :request
+  config.after(:each, :dox) do |example|
+    example.metadata[:request] = request
+    example.metadata[:response] = response
+  end
 
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:

@@ -16,3 +16,5 @@
 .byebug_history
 
 **/*.swp
+**/.DS_STORE
+public/*

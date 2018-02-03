@@ -25,12 +25,13 @@ group :development, :test, :staging do
 end
 
 group :development, :test do
+  gem 'apiaryio', '~> 0.10.2'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'dox'
   gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do
-  gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
 group :test do
