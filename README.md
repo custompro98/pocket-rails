@@ -10,3 +10,7 @@ To view the API docs go to the [ApiaryIO Site](https://pocketrails.docs.apiary.i
 
 ## Demo
 You can practice hitting the API on the [staging site](https://secret-lake-48253.herokuapp.com)
+
+## GraphQL
+- Install [PostGraphQL](https://github.com/postgraphql/postgraphql)
+- `postgraphql -c postgres://<user>:<pass>@<host>:<port>/<db>`
