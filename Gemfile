@@ -5,8 +5,10 @@ ruby "2.4.1"
 gem 'rails', '~> 5.1.4'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
+
 gem 'devise_token_auth', '~> 0.1.42'
 gem 'active_model_serializers'
+gem 'graphql'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -32,6 +34,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'graphql-formatter'
 end
 
 group :test do

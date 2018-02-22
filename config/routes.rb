@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         resources :tags, only: [:index, :create, :destroy]
       end
       resources :tags, only: [:index, :create, :destroy]
+      post "/graphql", to: "graphql#execute"
     end
   end
 end
