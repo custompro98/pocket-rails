@@ -60,6 +60,7 @@ GEM
       activesupport
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
     database_cleaner (1.6.2)
@@ -90,6 +91,9 @@ GEM
     ffi (1.9.18)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    graphql (1.7.12)
+    graphql-formatter (0.1.1)
+      colorize
     hitimes (1.2.6)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -220,6 +224,8 @@ DEPENDENCIES
   dox
   factory_bot_rails
   faker
+  graphql
+  graphql-formatter
   pg (~> 0.18)
   puma (~> 3.7)
   rack-cors
