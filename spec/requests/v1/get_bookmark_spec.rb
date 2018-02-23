@@ -17,8 +17,8 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns the bookmark', :dox do
-        expect(json).not_to be_empty
-        expect(json[:id]).to eq bookmark.id
+        expect(json[:bookmark]).not_to be_empty
+        expect(json[:bookmark][:id]).to eq bookmark.id
       end
     end
 

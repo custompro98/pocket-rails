@@ -16,7 +16,7 @@ describe 'Bookmark Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an empty array' do
-        expect(json).to be_empty
+        expect(json[:tags]).to be_empty
       end
     end
 
@@ -28,8 +28,8 @@ describe 'Bookmark Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns all tags attached to the bookmark', :dox do
-        expect(json).not_to be_empty
-        expect(json.size).to eq 9
+        expect(json[:tags]).not_to be_empty
+        expect(json[:tags].size).to eq 9
       end
     end
 
@@ -41,8 +41,8 @@ describe 'Bookmark Tags', type: :request do
 
       context 'page 1' do
         it 'returns the first 10 tags', :dox do
-          expect(json).not_to be_empty
-          expect(json.size).to eq 10
+          expect(json[:tags]).not_to be_empty
+          expect(json[:tags].size).to eq 10
         end
       end
 
@@ -50,8 +50,8 @@ describe 'Bookmark Tags', type: :request do
         let(:params) { {page: 2} }
 
         it 'returns the next 9 tags' do
-          expect(json).not_to be_empty
-          expect(json.size).to eq 9
+          expect(json[:tags]).not_to be_empty
+          expect(json[:tags].size).to eq 9
         end
       end
     end
