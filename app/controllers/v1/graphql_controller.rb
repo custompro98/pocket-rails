@@ -7,10 +7,15 @@ module V1
       result = PocketSchema.execute(query, variables: variables,
                                            context: context,
                                            operation_name: operation_name)
-      json_response(result['data'])
+      json_response(response_from(result))
     end
 
     private
+
+    def response_from(result)
+      return result['data'] unless result['errors'].present?
+      { error: result['errors'].first['message'] }.to_json
+    end
 
     def query
       params[:query]
