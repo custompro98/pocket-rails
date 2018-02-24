@@ -36,7 +36,7 @@ module TagMutations
     name 'addTag'
     description 'Add a tag to a bookmark'
 
-    input_field :bookmarkId, !types.ID
+    input_field :bookmarkId, types.ID
     input_field :tagIds, types[types.ID]
 
     return_field :bookmark, ::Types::BookmarkType
@@ -50,6 +50,26 @@ module TagMutations
                           taggable_id: inputs[:bookmarkId],
                           taggable_type: 'Bookmark')
       end
+      { bookmark: ::Bookmark.find_by(id: inputs[:bookmarkId]) }
+    }
+  end
+
+  Remove = GraphQL::Relay::Mutation.define do
+    name 'removeTag'
+    description 'Remove a tag from a bookmark'
+
+    input_field :bookmarkId, types.ID
+    input_field :tagId, types.ID
+
+    return_field :bookmark, ::Types::BookmarkType
+
+    resolve ->(obj, inputs, ctx) {
+      ::Bookmark.owned_by?(ctx[:current_user], inputs[:bookmarkId])
+      ::Tag.owned_by?(ctx[:current_user], inputs[:tagId])
+      ::TagJoin.find_by!(taggable_id: inputs[:bookmarkId],
+                         taggable_type: 'Bookmark',
+                         tag_id: inputs[:tagId]).destroy
+
       { bookmark: ::Bookmark.find_by(id: inputs[:bookmarkId]) }
     }
   end
