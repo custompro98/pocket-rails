@@ -19,7 +19,7 @@ module BookmarkMutations
 
   Update = GraphQL::Relay::Mutation.define do
     name 'updateBookmark'
-    description ' a bookmark'
+    description 'Update a bookmark'
 
     input_field :id, types.ID
     input_field :title, types.String
@@ -41,6 +41,22 @@ module BookmarkMutations
       else
         bookmark = ::Bookmark.create!(inputs.to_h.except(:id).merge(user_id: ctx[:current_user].id))
       end
+
+      { bookmark: bookmark }
+    }
+  end
+
+  Delete = GraphQL::Relay::Mutation.define do
+    name 'deleteBookmark'
+    description 'Delete a bookmark'
+
+    input_field :id, types.ID
+
+    return_field :bookmark, ::Types::BookmarkType
+
+    resolve ->(obj, inputs, ctx) {
+      bookmark = ::Bookmark.find_by!(id: inputs[:id], user_id: ctx[:current_user].id)
+      bookmark.destroy
 
       { bookmark: bookmark }
     }
