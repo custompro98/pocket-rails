@@ -6,5 +6,7 @@ Types::MutationType = GraphQL::ObjectType.define do
   field :deleteBookmark, field: BookmarkMutations::Delete.field
 
   field :createTag, field: TagMutations::Create.field
+  field :deleteTag, field: TagMutations::Delete.field
+
   field :addTag, field: TagMutations::Add.field
 end

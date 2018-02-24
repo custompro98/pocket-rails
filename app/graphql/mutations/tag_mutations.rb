@@ -16,6 +16,22 @@ module TagMutations
     }
   end
 
+  Delete = GraphQL::Relay::Mutation.define do
+    name 'deleteTag'
+    description 'Delete a tag'
+
+    input_field :id, types.ID
+
+    return_field :tag, ::Types::TagType
+
+    resolve ->(obj, inputs, ctx) {
+      tag = ::Tag.find_by!(id: inputs[:id], user_id: ctx[:current_user].id)
+      tag.destroy
+
+      { tag: tag }
+    }
+  end
+
   Add = GraphQL::Relay::Mutation.define do
     name 'addTag'
     description 'Add a tag to a bookmark'
