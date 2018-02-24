@@ -17,8 +17,9 @@ module ExceptionHandler
       )
     end
 
-    rescue_from ResourceForbidden do
-      json_response({message: "#{object_type} is owned by a different user"}, status: :forbidden)
+    rescue_from ResourceForbidden do |err|
+      response = graphql? ? {error: err.message} : {message: err.message}
+      json_response(response, status: graphql? ? :ok : :forbidden)
     end
 
     def parse_errors(err)
