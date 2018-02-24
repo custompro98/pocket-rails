@@ -7,6 +7,8 @@ before_script:
   - ./cc-test-reporter before-build
   - rake db:setup
   - rake db:migrate
+script:
+  - RUN_COVERAGE=true bundle exec rake
 after_success:
   - rake api:docs:publish
 after_script:
