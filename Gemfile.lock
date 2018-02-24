@@ -92,8 +92,6 @@ GEM
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     graphql (1.7.12)
-    graphql-errors (0.1.0)
-      graphql (>= 1.6.0, < 2)
     graphql-formatter (0.1.1)
       colorize
     hitimes (1.2.6)
@@ -227,7 +225,6 @@ DEPENDENCIES
   factory_bot_rails
   faker
   graphql
-  graphql-errors
   graphql-formatter
   pg (~> 0.18)
   puma (~> 3.7)

@@ -9,7 +9,6 @@ gem 'puma', '~> 3.7'
 gem 'devise_token_auth', '~> 0.1.42'
 gem 'active_model_serializers'
 gem 'graphql'
-gem 'graphql-errors'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
