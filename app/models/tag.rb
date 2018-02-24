@@ -7,4 +7,8 @@ class Tag < ApplicationRecord
 
   validates_presence_of :name, :user_id
   validates_uniqueness_of :name, scope: [:user_id, :archived]
+
+  def self.owned_by(current_user)
+    where(user_id: current_user.id)
+  end
 end
