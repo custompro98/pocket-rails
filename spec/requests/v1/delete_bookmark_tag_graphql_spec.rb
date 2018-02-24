@@ -1,23 +1,25 @@
 require 'rails_helper'
 
 describe 'Bookmark Tags', type: :request do
-  include ::Docs::V1::BookmarkTags::Api
-
-  describe 'DELETE /bookmarks/:bookmark_id/tags/:id' do
-    include ::Docs::V1::BookmarkTags::Destroy
-
+  describe 'POST /graphql - Bookmark Tag Mutation Delete' do
     let(:owner) { create(:user) }
     let(:bookmark) { create(:bookmark, user_id: owner.id) }
+    let(:query) do
+      { "query":
+          "mutation removeTag{
+            removeTag(input: { bookmarkId: #{bookmark.id}, tagId: #{tag.id} })
+            { bookmark { id } }
+          }" }
+    end
 
-    before { delete v1_bookmark_tag_path(bookmark, tag), headers: headers(owner) }
+    before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
     context 'the tag to delete exists' do
       let(:tag) { create(:tag, user_id: owner.id, taggable: bookmark) }
-      let(:status) { :no_content }
 
       it_behaves_like 'a successful request'
 
-      it 'deletes the tag from the bookmark, but not the tag itself', :dox do
+      it 'deletes the tag from the bookmark, but not the tag itself' do
         expect(::Tag.find(tag.id).id).to eq tag.id
         expect(::Bookmark.find(bookmark.id).tags).to be_empty
       end
@@ -25,23 +27,25 @@ describe 'Bookmark Tags', type: :request do
 
     context 'the tag to delete is not attached to the bookmark' do
       let(:tag) { create(:tag, user_id: owner.id) }
-      let(:status) { :not_found }
 
-      it_behaves_like 'an unsuccessful request'
+      it_behaves_like 'a successful request'
 
-      it 'doesn\'t delete the tag', :dox do
+      it 'doesn\'t delete the tag' do
         expect(::Tag.find(tag.id).id).to eq tag.id
+      end
+
+      it 'returns an error message' do
+        expect(json[:error]).to eq 'Tag not found'
       end
     end
 
     context 'the tag to delete is not owned by the current user' do
       let(:tag) { create(:tag, taggable: bookmark) }
-      let(:status) { :forbidden }
 
-      it_behaves_like 'an unsuccessful request'
+      it_behaves_like 'a successful request'
 
-      it 'returns an error message', :dox do
-        expect(json[:message]).to eq 'Tag is owned by a different user'
+      it 'returns an error message' do
+        expect(json[:error]).to eq 'Tag is owned by a different user'
       end
     end
 
@@ -52,7 +56,7 @@ describe 'Bookmark Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an error message' do
-        expect(json[:message]).to eq 'Bookmark is owned by a different user'
+        expect(json[:error]).to eq 'Bookmark is owned by a different user'
       end
     end
   end

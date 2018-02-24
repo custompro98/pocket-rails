@@ -9,4 +9,5 @@ Types::MutationType = GraphQL::ObjectType.define do
   field :deleteTag, field: TagMutations::Delete.field
 
   field :addTag, field: TagMutations::Add.field
+  field :removeTag, field: TagMutations::Remove.field
 end
