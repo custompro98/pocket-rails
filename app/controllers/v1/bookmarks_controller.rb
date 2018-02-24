@@ -19,7 +19,7 @@ module V1
     def update
       bookmark = ::Bookmark.find_by(id: params[:id])
 
-      unless bookmark.nil? || bookmark.user_id == current_user.id
+      if bookmark.present? && bookmark.user_id != current_user.id
         raise ::ExceptionHandler::ResourceForbidden.new("#{object_type} is owned by a different user")
       end
 
