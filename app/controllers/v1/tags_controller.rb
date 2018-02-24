@@ -11,8 +11,8 @@ module V1
 
     def create
       if params[:bookmark_id].present?
-        owned_by_current_user?(::Bookmark, params[:bookmark_id])
-        owned_by_current_user?(::Tag, params[:tag_ids])
+        ::Bookmark.owned_by?(current_user, params[:bookmark_id])
+        ::Tag.owned_by?(current_user, params[:tag_ids])
         params[:tag_ids].map do |tag_id|
           ::TagJoin.create!(tag_id: tag_id,
                             taggable_id: params[:bookmark_id],
@@ -30,8 +30,8 @@ module V1
 
     def destroy
       if params[:bookmark_id].present?
-        owned_by_current_user?(::Bookmark, params[:bookmark_id])
-        owned_by_current_user?(::Tag, params[:id])
+        ::Bookmark.owned_by?(current_user, params[:bookmark_id])
+        ::Tag.owned_by?(current_user, params[:id])
         ::TagJoin.find_by!(taggable_id: params[:bookmark_id],
                            taggable_type: 'Bookmark',
                            tag_id: params[:id]).destroy
@@ -43,12 +43,6 @@ module V1
     end
 
     private
-
-    def owned_by_current_user?(relation, id)
-      unless relation.where(id: id).all? { |resource| resource.user_id == current_user.id }
-        raise ::ExceptionHandler::ResourceForbidden
-      end
-    end
 
     def create_tag_params
       params.permit(:name).merge(user_id: current_user.id)

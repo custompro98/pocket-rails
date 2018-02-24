@@ -1,4 +1,6 @@
 class Tag < ApplicationRecord
+  extend ::Concerns::Authenticatable
+
   belongs_to :user
   belongs_to :taggable, polymorphic: true, optional: true
 
@@ -8,7 +10,7 @@ class Tag < ApplicationRecord
   validates_presence_of :name, :user_id
   validates_uniqueness_of :name, scope: [:user_id, :archived]
 
-  def self.owned_by(current_user)
-    where(user_id: current_user.id)
+  def self.owned_by(user)
+    where(user_id: user.id)
   end
 end
