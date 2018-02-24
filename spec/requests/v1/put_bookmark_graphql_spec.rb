@@ -3,37 +3,49 @@ require 'rails_helper'
 describe 'Bookmarks', type: :request do
   describe 'POST /graphql - Bookmark Mutation', type: :request do
     let(:owner) { create(:user) }
+    let(:status) { :ok }
 
-    before { put v1_bookmark_path(bookmark), params: attributes.to_json, headers: headers(owner) }
+    before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
     context 'the bookmark to update already exists and is owned by current user' do
       let(:bookmark) { create(:bookmark, user_id: owner.id) }
 
-      context 'when all required bookmark attributes are submitted' do
-        let(:attributes) do
-          {title: 'Test Title', url: 'www.example.com', archived: true, favorite: true}
+      context 'when all bookmark attributes are submitted' do
+        let(:query) do
+          { "query":
+              "mutation updateBookmark{
+                updateBookmark(input: { id: #{bookmark.id}
+                                        title: \"GraphQL\",
+                                        url: \"http://www.graphql.org\",
+                                        favorite: false,
+                                        archived: false })
+                { bookmark { id } }
+              }" }
         end
-        let(:status) { :no_content }
 
         it_behaves_like 'a successful request'
 
-        it 'includes a location header to redirect to the bookmark', :dox do
-          expect(response.headers['Location']).not_to be_nil
+        it 'includes selected fields from the bookmark' do
+          expect(json[:updateBookmark][:bookmark][:id]).not_to be_nil
         end
       end
 
-      context 'when not all required bookmark attributes are submitted' do
-        let(:attributes) { {title: 'Test Title'} }
-        let(:status) { :unprocessable_entity }
+      context 'when not all bookmark attributes are submitted' do
+        let(:query) do
+          { "query":
+              "mutation updateBookmark{
+                updateBookmark(input: { id: #{bookmark.id}
+                                        title: \"GraphQL\" })
+                { bookmark { id } }
+              }" }
+        end
 
         let(:url_error) { {field: 'url', message: 'can\'t be blank'} }
 
-        it_behaves_like 'an unsuccessful request'
+        it_behaves_like 'a successful request'
 
-        it 'returns an unscucessful message with errors', :dox do
-          expect(json[:message]).to eq 'Bookmark cannot be updated'
-          expect(json[:errors].size).to eq 1
-          expect(json[:errors]).to include url_error
+        it 'includes selected fields from the bookmark' do
+          expect(json[:updateBookmark][:bookmark][:id]).not_to be_nil
         end
       end
     end
@@ -42,36 +54,26 @@ describe 'Bookmarks', type: :request do
       let(:bookmark) { create(:bookmark) }
 
       context 'when all required bookmark attributes are submitted' do
-        let(:attributes) do
-          {title: 'Test Title', url: 'www.example.com', archived: true, favorite: true}
+        let(:query) do
+          { "query":
+              "mutation updateBookmark{
+                updateBookmark(input: { id: #{bookmark.id}
+                                        title: \"GraphQL\",
+                                        url: \"http://www.graphql.org\",
+                                        favorite: false,
+                                        archived: false })
+                { bookmark { id } }
+              }" }
         end
-        let(:status) { :forbidden }
 
-        it_behaves_like 'an unsuccessful request'
+        it_behaves_like 'a successful request'
 
         it 'does not update the bookmark' do
           expect(::Bookmark.first.title).not_to eq 'Test Title'
         end
 
-        it 'returns an unsuccessful message', :dox do
-          expect(json[:message]).to eq 'Bookmark is owned by a different user'
-        end
-      end
-
-      context 'when not all required bookmark attributes are submitted' do
-        let(:attributes) { {title: 'Test Title'} }
-        let(:status) { :forbidden }
-
-        let(:url_error) { {field: 'url', message: 'can\'t be blank'} }
-
-        it_behaves_like 'an unsuccessful request'
-
-        it 'does not update the bookmark' do
-          expect(::Bookmark.first.title).not_to eq 'Test Title'
-        end
-
-        it 'returns an unsuccessful message', :dox do
-          expect(json[:message]).to eq 'Bookmark is owned by a different user'
+        it 'returns an unsuccessful message' do
+          expect(json[:error]).to eq 'Bookmark is owned by a different user'
         end
       end
     end
@@ -80,15 +82,23 @@ describe 'Bookmarks', type: :request do
       let(:bookmark) { OpenStruct.new(id: 1) }
 
       context 'when all required bookmark attributes are submitted' do
-        let(:attributes) do
-          {title: 'Test Title', url: 'www.example.com', archived: true, favorite: true}
+        let(:query) do
+          { "query":
+              "mutation updateBookmark{
+                updateBookmark(input: { id: #{bookmark.id}
+                                        title: \"GraphQL\",
+                                        url: \"http://www.graphql.org\",
+                                        favorite: false,
+                                        archived: false })
+                { bookmark { id } }
+              }" }
         end
-        let(:status) {:created}
+        let(:status) {:ok}
 
         it_behaves_like 'a successful request'
 
-        it 'includes a location header to redirect to the bookmark', :dox do
-          expect(response.headers['Location']).not_to be_nil
+        it 'includes selected fields from the bookmark' do
+          expect(json[:updateBookmark][:bookmark][:id]).not_to be_nil
         end
       end
     end
