@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Bookmark Tags', type: :request do
+  include ::Docs::V1::Graphql::BookmarkTags::Api
+
   describe 'POST /graphql - Bookmark Tag Mutation Delete' do
+    include ::Docs::V1::Graphql::BookmarkTags::Destroy
+
     let(:owner) { create(:user) }
     let(:bookmark) { create(:bookmark, user_id: owner.id) }
     let(:query) do
@@ -19,7 +23,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'deletes the tag from the bookmark, but not the tag itself' do
+      it 'deletes the tag from the bookmark, but not the tag itself', :dox do
         expect(::Tag.find(tag.id).id).to eq tag.id
         expect(::Bookmark.find(bookmark.id).tags).to be_empty
       end
@@ -34,7 +38,7 @@ describe 'Bookmark Tags', type: :request do
         expect(::Tag.find(tag.id).id).to eq tag.id
       end
 
-      it 'returns an error message' do
+      it 'returns an error message', :dox do
         expect(json[:error]).to eq 'Tag not found'
       end
     end
@@ -44,7 +48,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an error message' do
+      it 'returns an error message', :dox do
         expect(json[:error]).to eq 'Tag is owned by a different user'
       end
     end
@@ -55,7 +59,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an error message' do
+      it 'returns an error message', :dox do
         expect(json[:error]).to eq 'Bookmark is owned by a different user'
       end
     end

@@ -4,9 +4,9 @@ module Docs
       extend Dox::DSL::Syntax
 
       document :api do
-        resource 'Tags' do
-        endpoint '/tags'
-        group 'Tags'
+        resource 'Tags - REST' do
+          endpoint '/tags'
+          group 'Tags'
         end
       end
 

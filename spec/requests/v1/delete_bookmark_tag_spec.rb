@@ -29,8 +29,12 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'an unsuccessful request'
 
-      it 'doesn\'t delete the tag', :dox do
+      it 'doesn\'t delete the tag' do
         expect(::Tag.find(tag.id).id).to eq tag.id
+      end
+
+      it 'returns an error message', :dox do
+        expect(json[:message]).to eq 'Tag not found'
       end
     end
 
@@ -51,7 +55,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an error message' do
+      it 'returns an error message', :dox do
         expect(json[:message]).to eq 'Bookmark is owned by a different user'
       end
     end

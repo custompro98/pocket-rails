@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Tags', type: :request do
+  include ::Docs::V1::Graphql::Tags::Api
+
   describe 'POST /graphql - Tags' do
+    include ::Docs::V1::Graphql::Tags::Index
+
     let(:owner) { create(:user) }
     let(:status) { :ok }
 
@@ -20,13 +24,13 @@ describe 'Tags', type: :request do
     context 'there are fewer than the page limit tags that belong to current user' do
       let!(:tags) { create_list(:tag, 9, user_id: owner.id) }
       let!(:not_my_tag) { create(:tag) }
-      let(:query) { { query: "{tags {id}}" } }
+      let(:query) { { query: "{tags {id name favorite archived owner {first_name last_name email}}}" } }
 
       before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
       it_behaves_like 'a successful request'
 
-      it 'returns all tags' do
+      it 'returns all tags', :dox do
         expect(json[:tags]).not_to be_empty
         expect(json[:tags].size).to eq 9
       end
@@ -40,7 +44,7 @@ describe 'Tags', type: :request do
       before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
       context 'page 1' do
-        it 'returns the first 10 tags' do
+        it 'returns the first 10 tags', :dox do
           expect(json[:tags]).not_to be_empty
           expect(json[:tags].size).to eq 10
         end

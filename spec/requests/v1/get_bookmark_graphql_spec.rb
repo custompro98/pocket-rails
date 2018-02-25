@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Bookmarks', type: :request do
+  include ::Docs::V1::Graphql::Bookmarks::Api
+
   describe 'POST /graphql - Bookmark' do
+    include ::Docs::V1::Graphql::Bookmarks::Show
+
     let(:owner) { create(:user) }
     let(:query) { { query: "{bookmark(id: #{bookmark.id}) {id}}"} }
 
@@ -13,7 +17,7 @@ describe 'Bookmarks', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns the bookmark' do
+      it 'returns the bookmark', :dox do
         expect(json[:bookmark]).not_to be_empty
         expect(json[:bookmark][:id]).to eq bookmark.id
       end
@@ -25,7 +29,7 @@ describe 'Bookmarks', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns a not found message' do
+      it 'returns a not found message', :dox do
         expect(json[:error]).to eq 'Bookmark not found'
       end
     end
@@ -36,7 +40,7 @@ describe 'Bookmarks', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns a not found message' do
+      it 'returns a not found message', :dox do
         expect(json[:error]).to eq 'Bookmark not found'
       end
     end

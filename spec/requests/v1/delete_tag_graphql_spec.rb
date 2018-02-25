@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Tags', type: :request do
+  include ::Docs::V1::Graphql::Tags::Api
+
   describe 'POST /graphql - Tag Mutation Delete', type: :request do
+    include ::Docs::V1::Graphql::Tags::Destroy
+
     let(:owner) { create(:user) }
     let(:query) do
       { "query":
@@ -18,7 +22,7 @@ describe 'Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'deletes the tag' do
+      it 'deletes the tag', :dox do
         expect{ ::Tag.find(tag.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -32,7 +36,7 @@ describe 'Tags', type: :request do
         expect(::Tag.find(tag.id)).to eq tag
       end
 
-      it 'returns an error message' do
+      it 'returns an error message', :dox do
         expect(json[:error]).to eq 'Tag not found'
       end
     end
@@ -42,7 +46,7 @@ describe 'Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an error message' do
+      it 'returns an error message', :dox do
         expect(json[:error]).to eq 'Tag not found'
       end
     end
