@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Bookmark Tags', type: :request do
+  include ::Docs::V1::Graphql::BookmarkTags::Api
+
   describe 'POST /graphql - Bookmark Tags Mutation' do
+    include ::Docs::V1::Graphql::BookmarkTags::Create
+
     let(:owner) { create(:user) }
     let(:bookmark) { create(:bookmark, user_id: owner.id) }
     let(:query) do
@@ -25,7 +29,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an unsuccessful message with errors' do
+      it 'returns an unsuccessful message with errors', :dox do
         expect(json[:message]).to eq 'Graphql cannot be executed'
         expect(json[:errors].size).to eq 2
         expect(json[:errors]).to include tag_error
@@ -38,7 +42,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'attaches the tag to the bookmark' do
+      it 'attaches the tag to the bookmark', :dox do
         expect(::Bookmark.find(bookmark.id).tags.first.id).to eq(tag_ids.first)
       end
 
@@ -52,7 +56,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'attaches many tags to the bookmark' do
+      it 'attaches many tags to the bookmark', :dox do
         expect(::Bookmark.find(bookmark.id).tags.map(&:id).sort).to eq(tag_ids.sort)
       end
     end
@@ -64,7 +68,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an unsuccessful message with errors' do
+      it 'returns an unsuccessful message with errors', :dox do
         expect(json[:message]).to eq 'Graphql cannot be executed'
         expect(json[:errors].size).to eq 1
         expect(json[:errors]).to include taggable_error
@@ -76,7 +80,7 @@ describe 'Bookmark Tags', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an unsuccessful message' do
+      it 'returns an unsuccessful message', :dox do
         expect(json[:error]).to eq 'Tag is owned by a different user'
       end
     end

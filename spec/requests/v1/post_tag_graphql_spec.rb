@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Tags', type: :request do
+  include ::Docs::V1::Graphql::Tags::Api
+
   describe 'POST /graphql - Tags Mutation' do
+    include ::Docs::V1::Graphql::Tags::Create
+
     let(:owner) { create(:user) }
 
     before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
@@ -23,7 +27,7 @@ describe 'Tags', type: :request do
         expect(json[:createTag][:tag][:id]).not_to be_nil
       end
 
-      it 'creates a tag owned by current user' do
+      it 'creates a tag owned by current user', :dox do
         expect(::Tag.first.user_id).to eq(owner.id)
       end
     end
@@ -42,7 +46,7 @@ describe 'Tags', type: :request do
 
       it_behaves_like 'an unsuccessful request'
 
-      it 'returns an unsuccessful message with errors' do
+      it 'returns an unsuccessful message with errors', :dox do
         expect(json[:message]).to eq 'Graphql cannot be executed'
         expect(json[:errors].size).to eq 1
         expect(json[:errors]).to include name_error

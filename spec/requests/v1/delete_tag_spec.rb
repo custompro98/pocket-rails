@@ -26,6 +26,14 @@ describe 'Tags', type: :request do
       let(:status) { :not_found }
 
       it_behaves_like 'an unsuccessful request'
+
+      it 'does not delete the tag' do
+        expect(::Tag.find(tag.id)).to eq tag
+      end
+
+      it 'returns an error message', :dox do
+        expect(json[:message]).to eq 'Tag not found'
+      end
     end
 
     context 'the tag to delete does not exist' do

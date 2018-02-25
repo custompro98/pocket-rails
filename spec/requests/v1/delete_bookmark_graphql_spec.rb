@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Bookmarks', type: :request do
+  include ::Docs::V1::Graphql::Bookmarks::Api
+
   describe 'POST /graphql - Bookmark Mutation Delete', type: :request do
+    include ::Docs::V1::Graphql::Bookmarks::Destroy
+
     let(:owner) { create(:user) }
     let(:query) do
       { "query":
@@ -18,7 +22,7 @@ describe 'Bookmarks', type: :request do
 
       it_behaves_like 'a successful request'
 
-      it 'deletes the bookmark' do
+      it 'deletes the bookmark', :dox do
         expect{ ::Bookmark.find(bookmark.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -32,7 +36,7 @@ describe 'Bookmarks', type: :request do
         expect(::Bookmark.find(bookmark.id)).to eq bookmark
       end
 
-      it 'returns an error message' do
+      it 'returns an error message', :dox do
         expect(json[:error]).to eq 'Bookmark not found'
       end
     end

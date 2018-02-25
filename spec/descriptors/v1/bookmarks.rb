@@ -4,9 +4,9 @@ module Docs
       extend Dox::DSL::Syntax
 
       document :api do
-        resource 'Bookmarks' do
-        endpoint '/bookmarks'
-        group 'Bookmarks'
+        resource 'Bookmarks - REST' do
+          endpoint '/bookmarks'
+          group 'Bookmarks'
         end
       end
 

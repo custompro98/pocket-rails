@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Bookmarks', type: :request do
+  include ::Docs::V1::Graphql::Bookmarks::Api
+
   describe 'POST /graphql - Bookmark Mutation', type: :request do
+    include ::Docs::V1::Graphql::Bookmarks::Update
+
     let(:owner) { create(:user) }
     let(:status) { :ok }
 
@@ -25,7 +29,7 @@ describe 'Bookmarks', type: :request do
 
         it_behaves_like 'a successful request'
 
-        it 'includes selected fields from the bookmark' do
+        it 'includes selected fields from the bookmark', :dox do
           expect(json[:updateBookmark][:bookmark][:id]).not_to be_nil
         end
       end
@@ -72,7 +76,7 @@ describe 'Bookmarks', type: :request do
           expect(::Bookmark.first.title).not_to eq 'Test Title'
         end
 
-        it 'returns an unsuccessful message' do
+        it 'returns an unsuccessful message', :dox do
           expect(json[:error]).to eq 'Bookmark is owned by a different user'
         end
       end

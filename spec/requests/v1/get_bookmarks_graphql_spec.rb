@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Bookmarks', type: :request do
+  include ::Docs::V1::Graphql::Bookmarks::Api
+
   describe 'POST /graphql - Bookmarks' do
+    include ::Docs::V1::Graphql::Bookmarks::Index
+
     let(:owner) { create(:user) }
     let(:status) { :ok }
 
@@ -20,13 +24,13 @@ describe 'Bookmarks', type: :request do
     context 'there are fewer than the page limit bookmarks that belong to current user' do
       let!(:bookmarks) { create_list(:bookmark, 9, user_id: owner.id) }
       let!(:not_my_bookmark) { create(:bookmark) }
-      let(:query) { { query: "{bookmarks {id title url favorite archived owner { id }}}"} }
+      let(:query) { { query: "{bookmarks {id title url favorite archived owner { id first_name last_name email}}}"} }
 
       before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
       it_behaves_like 'a successful request'
 
-      it 'returns all bookmarks' do
+      it 'returns all bookmarks', :dox do
         expect(json[:bookmarks]).not_to be_empty
         expect(json[:bookmarks].size).to eq 9
       end
@@ -40,7 +44,7 @@ describe 'Bookmarks', type: :request do
       before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
       context 'page 1' do
-        it 'returns the first 10 bookmarks' do
+        it 'returns the first 10 bookmarks', :dox do
           expect(json[:bookmarks]).not_to be_empty
           expect(json[:bookmarks].size).to eq 10
         end
@@ -63,7 +67,7 @@ describe 'Bookmarks', type: :request do
 
       before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
-      it 'returns only the bookmarks with that tag' do
+      it 'returns only the bookmarks with that tag', :dox do
         expect(json[:bookmarks]).not_to be_empty
         expect(json[:bookmarks].size).to eq 1
         expect(json[:bookmarks].first[:title]).to eq bookmarks.first.title
