@@ -13,8 +13,7 @@ module V1
     private
 
     def response_from(result)
-      return result['data'] unless result['errors'].present?
-      { error: result['errors'].first['message'] }.to_json
+      result['data']
     end
 
     def query
