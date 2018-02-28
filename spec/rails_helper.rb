@@ -31,6 +31,7 @@ RSpec.configure do |config|
     end
   end
 
+  config.include ModelSpecHelper, type: :model
   config.include RequestSpecHelper, type: :request
   config.after(:each, :dox) do |example|
     example.metadata[:request] = request
