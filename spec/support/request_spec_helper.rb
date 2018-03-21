@@ -1,5 +1,5 @@
 require 'dox'
-require Rails.root.join('spec/shared_examples/response_codes.rb')
+# require Rails.root.join('spec/shared_examples/response_codes.rb')
 Dir[Rails.root.join('spec/descriptors/**/*.rb')].each { |f| require f }
 
 Dox.configure do |config|
