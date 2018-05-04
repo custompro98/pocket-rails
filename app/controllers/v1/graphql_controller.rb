@@ -28,6 +28,10 @@ module V1
       { current_user: current_user }
     end
 
+    def current_user
+      User.find_by_email('mitchjoa@gmail.com')
+    end
+
     def operation_name
       params[:operationName]
     end
