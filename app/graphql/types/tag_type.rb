@@ -1,6 +1,6 @@
 Types::TagType = GraphQL::ObjectType.define do
   name 'Tag'
-  field :id, !types.Int
+  field :id, !types.String
   field :name, !types.String
   field :favorite, !types.Boolean
   field :archived, !types.Boolean
