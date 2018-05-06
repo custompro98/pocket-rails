@@ -24,7 +24,7 @@ describe 'Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'includes selected fields from the bookmark' do
-        expect(json[:createTag][:tag][:id]).not_to be_nil
+        expect(json[:data][:createTag][:tag][:id]).not_to be_nil
       end
 
       it 'creates a tag owned by current user', :dox do
@@ -47,9 +47,9 @@ describe 'Tags', type: :request do
       it_behaves_like 'an unsuccessful request'
 
       it 'returns an unsuccessful message with errors', :dox do
-        expect(json[:message]).to eq 'Graphql cannot be executed'
-        expect(json[:errors].size).to eq 1
-        expect(json[:errors]).to include name_error
+        expect(json[:data][:message]).to eq 'Graphql cannot be executed'
+        expect(json[:data][:errors].size).to eq 1
+        expect(json[:data][:errors]).to include name_error
       end
     end
   end

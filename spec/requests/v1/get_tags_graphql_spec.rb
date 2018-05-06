@@ -17,7 +17,7 @@ describe 'Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an empty array' do
-        expect(json[:tags]).to be_empty
+        expect(json[:data][:tags]).to be_empty
       end
     end
 
@@ -31,8 +31,8 @@ describe 'Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns all tags', :dox do
-        expect(json[:tags]).not_to be_empty
-        expect(json[:tags].size).to eq 9
+        expect(json[:data][:tags]).not_to be_empty
+        expect(json[:data][:tags].size).to eq 9
       end
     end
 
@@ -45,8 +45,8 @@ describe 'Tags', type: :request do
 
       context 'page 1' do
         it 'returns the first 10 tags', :dox do
-          expect(json[:tags]).not_to be_empty
-          expect(json[:tags].size).to eq 10
+          expect(json[:data][:tags]).not_to be_empty
+          expect(json[:data][:tags].size).to eq 10
         end
       end
 
@@ -54,8 +54,8 @@ describe 'Tags', type: :request do
         let(:page) { 2 }
 
         it 'returns the next 9 tags' do
-          expect(json[:tags]).not_to be_empty
-          expect(json[:tags].size).to eq 9
+          expect(json[:data][:tags]).not_to be_empty
+          expect(json[:data][:tags].size).to eq 9
         end
       end
     end

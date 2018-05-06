@@ -17,7 +17,7 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an empty array' do
-        expect(json[:bookmarks]).to be_empty
+        expect(json[:data][:bookmarks]).to be_empty
       end
     end
 
@@ -31,8 +31,8 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns all bookmarks', :dox do
-        expect(json[:bookmarks]).not_to be_empty
-        expect(json[:bookmarks].size).to eq 9
+        expect(json[:data][:bookmarks]).not_to be_empty
+        expect(json[:data][:bookmarks].size).to eq 9
       end
     end
 
@@ -45,8 +45,8 @@ describe 'Bookmarks', type: :request do
 
       context 'page 1' do
         it 'returns the first 10 bookmarks', :dox do
-          expect(json[:bookmarks]).not_to be_empty
-          expect(json[:bookmarks].size).to eq 10
+          expect(json[:data][:bookmarks]).not_to be_empty
+          expect(json[:data][:bookmarks].size).to eq 10
         end
       end
 
@@ -54,8 +54,8 @@ describe 'Bookmarks', type: :request do
         let(:page) { 2 }
 
         it 'returns the next 9 bookmarks' do
-          expect(json[:bookmarks]).not_to be_empty
-          expect(json[:bookmarks].size).to eq 9
+          expect(json[:data][:bookmarks]).not_to be_empty
+          expect(json[:data][:bookmarks].size).to eq 9
         end
       end
     end
@@ -68,9 +68,9 @@ describe 'Bookmarks', type: :request do
       before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
       it 'returns only the bookmarks with that tag', :dox do
-        expect(json[:bookmarks]).not_to be_empty
-        expect(json[:bookmarks].size).to eq 1
-        expect(json[:bookmarks].first[:title]).to eq bookmarks.first.title
+        expect(json[:data][:bookmarks]).not_to be_empty
+        expect(json[:data][:bookmarks].size).to eq 1
+        expect(json[:data][:bookmarks].first[:title]).to eq bookmarks.first.title
       end
     end
   end

@@ -18,8 +18,8 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns the bookmark', :dox do
-        expect(json[:bookmark]).not_to be_empty
-        expect(json[:bookmark][:id]).to eq bookmark.id
+        expect(json[:data][:bookmark]).not_to be_empty
+        expect(json[:data][:bookmark][:id]).to eq bookmark.id.to_s
       end
     end
 
@@ -30,7 +30,7 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns a not found message', :dox do
-        expect(json[:error]).to eq 'Bookmark not found'
+        expect(json[:data][:error]).to eq 'Bookmark not found'
       end
     end
 
@@ -41,7 +41,7 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns a not found message', :dox do
-        expect(json[:error]).to eq 'Bookmark not found'
+        expect(json[:data][:error]).to eq 'Bookmark not found'
       end
     end
   end

@@ -30,7 +30,7 @@ describe 'Bookmarks', type: :request do
         it_behaves_like 'a successful request'
 
         it 'includes selected fields from the bookmark', :dox do
-          expect(json[:updateBookmark][:bookmark][:id]).not_to be_nil
+          expect(json[:data][:updateBookmark][:bookmark][:id]).not_to be_nil
         end
       end
 
@@ -49,7 +49,7 @@ describe 'Bookmarks', type: :request do
         it_behaves_like 'a successful request'
 
         it 'includes selected fields from the bookmark' do
-          expect(json[:updateBookmark][:bookmark][:id]).not_to be_nil
+          expect(json[:data][:updateBookmark][:bookmark][:id]).not_to be_nil
         end
       end
     end
@@ -77,7 +77,7 @@ describe 'Bookmarks', type: :request do
         end
 
         it 'returns an unsuccessful message', :dox do
-          expect(json[:error]).to eq 'Bookmark is owned by a different user'
+          expect(json[:data][:error]).to eq 'Bookmark is owned by a different user'
         end
       end
     end
@@ -102,7 +102,7 @@ describe 'Bookmarks', type: :request do
         it_behaves_like 'a successful request'
 
         it 'includes selected fields from the bookmark' do
-          expect(json[:updateBookmark][:bookmark][:id]).not_to be_nil
+          expect(json[:data][:updateBookmark][:bookmark][:id]).not_to be_nil
         end
       end
     end

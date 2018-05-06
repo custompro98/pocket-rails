@@ -26,7 +26,7 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'includes selected fields from the bookmark' do
-        expect(json[:createBookmark][:bookmark][:id]).not_to be_nil
+        expect(json[:data][:createBookmark][:bookmark][:id]).not_to be_nil
       end
 
       it 'creates a bookmark owned by current user', :dox do
@@ -51,10 +51,10 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an unsuccessful message with errors', :dox do
-        expect(json[:message]).to eq 'Graphql cannot be executed'
-        expect(json[:errors].size).to eq 2
-        expect(json[:errors]).to include title_error
-        expect(json[:errors]).to include url_error
+        expect(json[:data][:message]).to eq 'Graphql cannot be executed'
+        expect(json[:data][:errors].size).to eq 2
+        expect(json[:data][:errors]).to include title_error
+        expect(json[:data][:errors]).to include url_error
       end
     end
   end

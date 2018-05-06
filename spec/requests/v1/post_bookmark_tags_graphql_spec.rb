@@ -30,10 +30,10 @@ describe 'Bookmark Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an unsuccessful message with errors', :dox do
-        expect(json[:message]).to eq 'Graphql cannot be executed'
-        expect(json[:errors].size).to eq 2
-        expect(json[:errors]).to include tag_error
-        expect(json[:errors]).to include taggable_error
+        expect(json[:data][:message]).to eq 'Graphql cannot be executed'
+        expect(json[:data][:errors].size).to eq 2
+        expect(json[:data][:errors]).to include tag_error
+        expect(json[:data][:errors]).to include taggable_error
       end
     end
 
@@ -47,7 +47,7 @@ describe 'Bookmark Tags', type: :request do
       end
 
       it 'includes selected fields from the bookmark' do
-        expect(json[:addTag][:bookmark][:id]).not_to be_nil
+        expect(json[:data][:addTag][:bookmark][:id]).not_to be_nil
       end
     end
 
@@ -69,9 +69,9 @@ describe 'Bookmark Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an unsuccessful message with errors', :dox do
-        expect(json[:message]).to eq 'Graphql cannot be executed'
-        expect(json[:errors].size).to eq 1
-        expect(json[:errors]).to include taggable_error
+        expect(json[:data][:message]).to eq 'Graphql cannot be executed'
+        expect(json[:data][:errors].size).to eq 1
+        expect(json[:data][:errors]).to include taggable_error
       end
     end
 
@@ -81,7 +81,7 @@ describe 'Bookmark Tags', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an unsuccessful message', :dox do
-        expect(json[:error]).to eq 'Tag is owned by a different user'
+        expect(json[:data][:error]).to eq 'Tag is owned by a different user'
       end
     end
   end

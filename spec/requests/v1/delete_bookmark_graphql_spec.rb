@@ -37,7 +37,7 @@ describe 'Bookmarks', type: :request do
       end
 
       it 'returns an error message', :dox do
-        expect(json[:error]).to eq 'Bookmark not found'
+        expect(json[:data][:error]).to eq 'Bookmark not found'
       end
     end
 
@@ -47,7 +47,7 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns an error message' do
-        expect(json[:error]).to eq 'Bookmark not found'
+        expect(json[:data][:error]).to eq 'Bookmark not found'
       end
     end
   end
