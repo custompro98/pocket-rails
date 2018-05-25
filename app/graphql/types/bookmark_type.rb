@@ -1,6 +1,6 @@
 Types::BookmarkType = GraphQL::ObjectType.define do
   name 'Bookmark'
-  field :id, !types.String
+  field :id, !types.ID
   field :title, !types.String
   field :url, !types.String
   field :favorite, !types.Boolean

@@ -15,7 +15,7 @@ Types::QueryType = GraphQL::ObjectType.define do
     description 'Return paginated bookmarks collection'
     argument :page, types.Int, default_value: 1
     argument :limit, types.Int, default_value: 10
-    argument :tag, types.Int
+    argument :tag, types.ID
     resolve ->(obj, args, ctx) {
       offset = args[:page].present? ? ((args[:page].to_i - 1) * args[:limit]) : 0
       bookmarks = ::Bookmark.owned_by(ctx[:current_user])
