@@ -8,7 +8,7 @@ describe ::Types::TagType do
   end
 
   it 'has keys for each tag attribute' do
-    expect(subject.fields.keys.sort).to eq %w[id name favorite archived owner].sort
+    expect(subject.fields.keys.sort).to eq %w[id name favorite archived owner bookmarks].sort
   end
 
   it 'resolves the owner field' do

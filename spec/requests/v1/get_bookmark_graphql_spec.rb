@@ -7,7 +7,7 @@ describe 'Bookmarks', type: :request do
     include ::Docs::V1::Graphql::Bookmarks::Show
 
     let(:owner) { create(:user) }
-    let(:query) { { query: "{bookmark(id: #{bookmark.id}) {id}}"} }
+    let(:query) { { query: "{me {bookmark(id: #{bookmark.id}) {id}}}"} }
 
     before { post v1_graphql_path, params: query.to_json, headers: headers(owner) }
 
@@ -18,8 +18,8 @@ describe 'Bookmarks', type: :request do
       it_behaves_like 'a successful request'
 
       it 'returns the bookmark', :dox do
-        expect(json[:data][:bookmark]).not_to be_empty
-        expect(json[:data][:bookmark][:id]).to eq bookmark.id.to_s
+        expect(json[:data][:me][:bookmark]).not_to be_empty
+        expect(json[:data][:me][:bookmark][:id]).to eq bookmark.id.to_s
       end
     end
 

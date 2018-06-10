@@ -9,4 +9,9 @@ Types::TagType = GraphQL::ObjectType.define do
       ctx[:current_user]
     }
   end
+  connection :bookmarks, Connections::BookmarksConnection, 'Bookmarks with this tag' do
+    resolve ->(tag, args, ctx) {
+      tag.bookmarks
+    }
+  end
 end
