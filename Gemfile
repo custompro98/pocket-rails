@@ -8,7 +8,13 @@ gem 'puma', '~> 3.7'
 
 gem 'devise_token_auth', '~> 0.1.42'
 gem 'active_model_serializers'
+
 gem 'graphql'
+gem 'graphiql-rails'
+# Required to load graphiql
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
