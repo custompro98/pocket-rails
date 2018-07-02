@@ -30,6 +30,7 @@ gem 'rack-cors'
 
 group :development, :test, :staging do
   gem 'faker'
+  gem 'activerecord-import'
 end
 
 group :development, :test do
@@ -41,6 +42,7 @@ end
 
 group :development do
   gem 'graphql-formatter'
+  gem 'httparty'
 end
 
 group :test do

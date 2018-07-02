@@ -1,13 +1,13 @@
 module V1
   class BookmarksController < ::V1::ApplicationController
     def index
-      bookmarks = ::Bookmark.where(user_id: current_user.id)
+      bookmarks = ::Bookmark.includes(:tags).where(user_id: current_user.id)
       bookmarks = bookmarks.with_tag(params[:tag]) if params[:tag]
-      json_response(bookmarks.limit(limit).offset(offset))
+      json_response(bookmarks)#.limit(limit).offset(offset))
     end
 
     def show
-      json_response(::Bookmark.find_by!(id: params[:id], user_id: current_user.id))
+      json_response(::Bookmark.includes(:tags).find_by!(id: params[:id], user_id: current_user.id))
     end
 
     def create

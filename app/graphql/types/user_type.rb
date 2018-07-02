@@ -11,7 +11,7 @@ Types::UserType = GraphQL::ObjectType.define do
     description 'Return paginated bookmarks collection belonging to the current user'
     argument :tag, types.ID
     resolve ->(obj, args, ctx) {
-      bookmarks = ::Bookmark.owned_by(ctx[:current_user])
+      bookmarks = ::Bookmark.includes(:tags).owned_by(ctx[:current_user])
       bookmarks = bookmarks.with_tag(args[:tag]) if args[:tag].present?
       bookmarks
     }

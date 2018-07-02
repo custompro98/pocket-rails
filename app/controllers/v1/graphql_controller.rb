@@ -1,7 +1,7 @@
 module V1
   class GraphqlController < ::V1::ApplicationController
 
-    before_action :log_query
+    # before_action :log_query
 
     def execute
       result = PocketSchema.execute(query, variables: variables,
