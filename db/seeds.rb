@@ -7,7 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
-user = ::User.first_or_create(first_name: 'Mitch', last_name: 'Joa', email: 'mitchjoa@gmail.com', password: 'password')
+user = ::User.first_or_create(first_name: 'Graph',
+                              last_name: 'QL',
+                              email: 'graphql@example.com',
+                              password: 'password')
+
+# Needed otherwise tokens is "{}"
+user.reload
+user.tokens = nil
+user.save
 
 1000.times do
   ::Bookmark.create(title: Faker::Internet.domain_word,

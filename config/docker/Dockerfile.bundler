@@ -1,0 +1,7 @@
+FROM pocket:latest
+LABEL maintainer "Mitch Joa <mitchjoa@gmail.com>"
+
+COPY ["Gemfile", "Gemfile.lock", "/pocket/"]
+
+ENTRYPOINT [ "./bin/docker/bundler_boot" ]
+CMD [ "install", "--path /usr/local/bundle" ]

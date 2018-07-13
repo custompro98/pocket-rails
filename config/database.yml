@@ -1,15 +1,19 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: postgres
+  password: <%= ENV['POCKET_DATABASE_PASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
   database: pocket_development
+  host: <%= ENV['POCKET_DATABASE_HOST'] %>
 
 test:
   <<: *default
   database: pocket_test
+  host: <%= ENV['POCKET_DATABASE_HOST'] %>
 
 staging:
   <<: *default
@@ -18,5 +22,4 @@ staging:
 production:
   <<: *default
   database: pocket_production
-  username: pocket
-  password: <%= ENV['POCKET_DATABASE_PASSWORD'] %>
+  username: postgres

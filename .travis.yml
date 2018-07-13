@@ -5,8 +5,8 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-  - rake db:setup
-  - rake db:migrate
+  - bundle exec rake db:setup
+  - bundle exec rake db:migrate
 script:
   - RUN_COVERAGE=true bundle exec rake
 after_success:

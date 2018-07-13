@@ -4,7 +4,7 @@ class User < ApplicationRecord
           :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
-  validates_uniqueness_of :email, case_sensitive: true
+  validates_uniqueness_of :email, case_sensitive: true, scope: :provider
   validates_presence_of :first_name, :last_name, :email
 
   has_many :bookmarks, dependent: :destroy

@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+if [ -f "tmp/pids/server.pid" ]; then
+  echo "Removing stale server.pid"
+  rm tmp/pids/server.pid
+fi
+
+echo "Booting rails server: rails s"
+rails s
