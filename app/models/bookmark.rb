@@ -1,5 +1,5 @@
 class Bookmark < ApplicationRecord
-  extend ::Concerns::Authenticatable
+  extend Authenticatable
 
   validates_presence_of :title, :url, :user_id
 

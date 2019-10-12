@@ -1,5 +1,5 @@
 class Tag < ApplicationRecord
-  extend ::Concerns::Authenticatable
+  extend Authenticatable
 
   belongs_to :user
   belongs_to :taggable, polymorphic: true, optional: true
