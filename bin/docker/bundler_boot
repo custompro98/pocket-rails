@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-
-echo "Running: bundle $@"
-bundle $@
-
-echo ""

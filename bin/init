@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+docker-compose down
+docker-compose build web
+docker-compose run --rm web bundle exec rake db:setup
+
+echo "All done! Run 'docker-compose up' start the server."

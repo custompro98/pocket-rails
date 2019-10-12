@@ -5,5 +5,5 @@ if [ -f "tmp/pids/server.pid" ]; then
   rm tmp/pids/server.pid
 fi
 
-echo "Booting rails server: rails s"
-rails s
+# Execute CMD
+exec "$@"

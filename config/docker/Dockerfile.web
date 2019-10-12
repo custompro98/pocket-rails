@@ -1,4 +1,0 @@
-FROM pocket:latest
-LABEL maintainer "Mitch Joa <mitchjoa@gmail.com>"
-
-EXPOSE 3000

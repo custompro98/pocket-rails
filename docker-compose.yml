@@ -1,49 +1,25 @@
 version: '2'
 services:
-  app:
+  web:
     build:
       context: .
-      dockerfile: ./config/docker/Dockerfile
-    image: pocket:latest
-    command: echo "This is a base image, you should never run this directly"
-    volumes:
-      - bundle:/usr/local/bundle
-      - ./:/pocket
-    environment:
-      RAILS_ENV: development
-      POCKET_DATABASE_PASSWORD: password
-      POCKET_DATABASE_HOST: postgres
-  web:
-    extends: app
-    command: ./bin/docker/web_boot
     tty: true
     stdin_open: true
     ports:
       - "80:3000"
     links:
       - postgres
-  test:
-    extends: app
-    command: echo "Please provide a command to run (e.g. docker-compose run test rake)"
     environment:
-      RAILS_ENV: test
-    links:
-      - postgres
+      POCKET_DATABASE_HOST: postgres
+      POCKET_DATABASE_PASSWORD: password
+    volumes:
+      - ./:/pocket
   postgres:
     image: postgres:10.4
     ports:
       - "5432:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
-  bundler:
-    build:
-      context: .
-      dockerfile: ./config/docker/Dockerfile.bundler
-    volumes:
-      - bundle:/usr/local/bundle
-      - ./:/pocket
 volumes:
-  bundle:
-    driver: local
   dbdata:
     driver: local

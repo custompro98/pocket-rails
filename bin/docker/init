@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-docker-compose build app
-docker-compose build bundler
-docker-compose run bundler
-docker-compose run web rake db:setup
-
-echo "All done!"
-echo "Run docker-compose up web to start your Rails server"

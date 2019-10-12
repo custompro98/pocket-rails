@@ -8,7 +8,18 @@ RUN apt-get update && apt-get install -qq -y --fix-missing --no-install-recommen
    nodejs \
    libpq-dev
 
-ENV INSTALL_PATH /pocket
-RUN mkdir -p $INSTALL_PATH
+ENV WORKDIR /pocket
+RUN mkdir -p $WORKDIR
 
-WORKDIR $INSTALL_PATH
+WORKDIR $WORKDIR
+
+COPY Gemfile $WORKDIR/Gemfile
+COPY Gemfile.lock $WORKDIR/Gemfile.lock
+RUN bundle install
+
+COPY . $WORKDIR
+
+EXPOSE 3000
+
+ENTRYPOINT ["sh", "entrypoint.sh"]
+CMD ["rails", "server"]
