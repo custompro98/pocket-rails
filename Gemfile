@@ -6,9 +6,6 @@ gem 'rails', '~> 6.0.0'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 
-# Lock sprockets to < 4.0, Sprockets v4 raises ManifestNeededError
-# gem 'sprockets', '~> 3.0'
-
 gem 'devise_token_auth', '~> 1.1.3'
 gem 'active_model_serializers', '~> 0.10.10'
 
