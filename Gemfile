@@ -6,7 +6,7 @@ gem 'rails', '~> 5.2'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 
-gem 'devise_token_auth', '~> 0.1.42'
+gem 'devise_token_auth', '~> 1.1.3'
 gem 'active_model_serializers'
 
 gem 'graphql'

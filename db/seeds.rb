@@ -12,11 +12,6 @@ user = ::User.first_or_create(first_name: 'Graph',
                               email: 'graphql@example.com',
                               password: 'password')
 
-# Needed otherwise tokens is "{}"
-user.reload
-user.tokens = nil
-user.save
-
 1000.times do
   ::Bookmark.create(title: Faker::Internet.domain_word,
                     url: Faker::Internet.url,
