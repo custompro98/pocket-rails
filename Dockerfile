@@ -1,4 +1,4 @@
-FROM ruby:2.4.1
+FROM ruby:2.6.5
 LABEL maintainer "Mitch Joa <mitchjoa@gmail.com>"
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -15,7 +15,7 @@ WORKDIR $WORKDIR
 
 COPY Gemfile $WORKDIR/Gemfile
 COPY Gemfile.lock $WORKDIR/Gemfile.lock
-RUN bundle install
+RUN bundle install && cp Gemfile.lock /tmp
 
 COPY . $WORKDIR
 
