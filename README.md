@@ -18,12 +18,12 @@ To set up your environment: `bin/init`
 
 ### Services provided
 #### Web
-This service starts the Rails server or execute arbitrary rake tasks in the development Rails environment
+This service starts the Rails server or execute arbitrary rails tasks in the development Rails environment
 _localhost:80 is forwarded to localhost:3000_
 
 Starting the server: `docker-compose up -d`
 Attaching to the server: `docker attach <container>`
-Running rake tasks: `docker-compose run web rake task:name`
+Running rails tasks: `docker-compose run web rails task:name`
 Running RSpec: `docker-compose run web rspec path/to/test`
 
 ####  Postgres
