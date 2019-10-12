@@ -2,19 +2,21 @@ source 'https://rubygems.org'
 
 ruby "2.6.5"
 
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6.0.0'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 
+# Lock sprockets to < 4.0, Sprockets v4 raises ManifestNeededError
+# gem 'sprockets', '~> 3.0'
+
 gem 'devise_token_auth', '~> 1.1.3'
-gem 'active_model_serializers'
+gem 'active_model_serializers', '~> 0.10.10'
 
 gem 'graphql'
-gem 'graphiql-rails'
+# gem 'graphiql-rails' # removed temporarily because sass-rails is eol and does not suppport rails 6
 # Required to load graphiql
-gem 'sass-rails'
-gem 'uglifier'
-gem 'coffee-rails'
+# gem 'uglifier'
+# gem 'coffee-rails'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -33,7 +35,8 @@ group :development, :test, :staging do
 end
 
 group :development, :test do
-  gem 'apiaryio', '~> 0.10.2'
+  # Temporarily removed because apiaryio is incomaptible with rails 6
+  # gem 'apiaryio', '~> 0.13.0'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dox'
   gem 'rspec-rails', '~> 3.5'
@@ -41,6 +44,7 @@ end
 
 group :development do
   gem 'graphql-formatter'
+  gem 'listen'
 end
 
 group :test do

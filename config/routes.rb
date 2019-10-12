@@ -9,7 +9,8 @@ Rails.application.routes.draw do
       resources :tags, only: [:index, :create, :destroy]
 
       post "/graphql", to: "graphql#execute"
-      mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/api/v1/graphql' unless Rails.env.production?
+      # Temporarily removed because sass-rails is eol and does not support rails 6
+      # mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/api/v1/graphql' unless Rails.env.production?
     end
   end
 end
