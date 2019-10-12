@@ -4,23 +4,23 @@ rvm:
 services:
   - postgresql
 addons:
-  postgresql: "10"
+  postgresql: '10'
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+  - "./cc-test-reporter before-build"
   - bundle exec rake db:setup
   - bundle exec rake db:migrate
 script:
   - RUN_COVERAGE=true bundle exec rake
 after_success:
-  - rake api:docs:publish
+  - bundle exec rake api:docs:publish
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 deploy:
   provider: heroku
   api_key:
-    secure: JKLS4jAP39x1PvVVYwtKoNwHcraqPyv84rT38FRlDuAqEqToo3tYI2Dcpv6u8EgnUX8mUn4I2RkwlS5RJ7jnWWzBR9QRpzUkIXMkx4Le8O6oADrxaM9AoFfgZuxqBHGVY+AQCqO5CfAQZchNMABmTyhUUnpfxzpAzE/Y7Qqiq+fotjtX99FDSF96BtAq+OP44o4g2rPztayJP207lVZsxU/jLqbYtJPcIdkCSRT/6heET5N2sxToCOTn9S6Md1EokaPajZiY6ePKcH+R78aQ94eHc2ea9KMdohVs1OdA8M6dncs/PcvRL3GbgD+pbJJ7eDf5O2j6UXRIrezL5iaGOSvjIG3k/QaNU6wltsrGRD+TWIb5U4+4f+bBSF+r6jupG1vh9UKVrvBg9mPyOa8tI3V5rps0xu1QUaH3wJgzp2BPB/nBmqxNtPDqRsfLQcDsz8blgXHR4SKxLd79rTJ2zKy8KRl4riP+mofYoN+PNFW6XbxyhaZUL/wYJ9Lg2SBQVHMprMd0l3Ge9NBI53M60wpZIwGz0DVf4D8rwWBIqZ46E9nBqZm6yIdsKYuo7FSSeHUQo/eeJt9wV3KGPPILd40y5pdNtV8goAdWi10JEDbwii2j4ERB8v8I7kLodovfRhJwKoo1GhuyBSWp8q9JkEjntmvt7RLV0JuarIUcDWg=
+    secure: HCN5m8QZuIxZeW+N7rv9XH1K2/72a9J/n9bQ9FrKTrNrzUH4+WLZNQ4pxZsdY7WqiQR1aeDTUleTNAAjunpOlkGTEe4TXUXaG1bBvljCQEwW9kGjlKN/yb9caB/GjQmARvx1EMBdvc8IeIpZfqjDWa+5o7lfjW8rOGkDTsxja0a2hi1Z92Rx4lMK43VypncRFwD3p9CWitImIE+yCLACrXOZamY/1pFOOptk+LSdrYTr3DpT5mMAFK/vb5AYWdLxFNXB5ICOcMW693Q8usjid+mg2+YHLJw6NxIfvztjDfUtZYVC+tXyE1m9Uoh4hpMLgz+gmsfOTRtmadRiwByYVz7hFl2ZjtuORr2CHDk3Z+Ezn2VPwNn311IXbg0KOfUeWdDO4OV0wGUcRY9Qgke/eU1z8wPR5RQpNz9tqxeVAX5cjK3/dhKGi80HJaJC5eI1nx9skiXS0GoJ0Jg1aUCVu5HGfg9ywHjLZwwC98rt8ehvqFTocgjqxWI8NxLGdzrEZ9H2Cmoi1wZ/8IMRUcBHzfWJOYS+5Od5/QjHvfh8HMBZgMlpBgZHndKMoBQnYcT50qdeRgqVJC0gTHKmde+ooj42tbrPA3AJTrfR5sc5pCE7yaLJeIpudV5UudFjaHte+iOnzhYe/NC9dPfOCcHU2Zftiq+jGmfqkH371ACwG64=
   app: secret-lake-48253
   on:
     repo: custompro98/pocket-rails
