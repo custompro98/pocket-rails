@@ -4,7 +4,7 @@ ruby "2.6.5"
 
 gem 'rails', '~> 6.0.0'
 gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 4.3'
 
 gem 'devise_token_auth', '~> 1.1.3'
 gem 'active_model_serializers', '~> 0.10.10'
